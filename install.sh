@@ -3,26 +3,35 @@
 
 set -e
 
+# 1. Обновление и установка зависимостей
 echo "[*] Обновление системы и установка зависимостей..."
 apt update && apt install -y git libpcap-dev iptables conntrack dsniff curl build-essential
 
+# 2. Установка Go 1.22.11
 echo "[*] Установка Go 1.22.11..."
 rm -rf /usr/local/go
 curl -L https://go.dev/dl/go1.22.11.linux-amd64.tar.gz -o go.tar.gz
 tar -C /usr/local -xzf go.tar.gz
 rm go.tar.gz
 
+# 3. Настройка переменных окружения
 export PATH=$PATH:/usr/local/go/bin
 
-echo "[*] Настройка проекта..."
-# Если уже клонировали, идем в директорию
-[ -d "lazyguard" ] && cd lazyguard
+if ! grep -qxF 'export PATH=$PATH:/usr/local/go/bin' ~/.bashrc; then
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+    echo "[*] PATH обновлен в ~/.bashrc"
+fi
 
-go mod init github.com/internetkafe/lazyguard
+# 4. Сборка проекта
+echo "[*] Настройка проекта и сборка..."
+# Если скрипт запускается из корня проекта, инициализируем модули
+if [ ! -f "go.mod" ]; then
+    go mod init github.com/internetkafe/lazyguard
+fi
+
 go mod tidy
-
-echo "[*] Сборка LazyGuard..."
-go build -o lazyguard main.go
+go build -o brainguard main.go
 
 echo "[!] Установка завершена!"
-echo "[!] Теперь запустите: sudo ./lazyguard"
+echo "[!] Используйте 'sudo ./brainguard' для запуска."
+echo "[!] Примените изменения PATH командой: source ~/.bashrc"
