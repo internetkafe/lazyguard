@@ -22,7 +22,7 @@ go mod init github.com/internetkafe/lazyguard
 go mod tidy
 
 echo "[*] Сборка LazyGuard..."
-go build -o brainguard main.go
+go build -o lazyguard main.go
 
 echo "[!] Установка завершена!"
-echo "[!] Теперь запустите: sudo ./brainguard"
+echo "[!] Теперь запустите: sudo ./lazyguard"
