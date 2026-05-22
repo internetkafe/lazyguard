@@ -42,7 +42,7 @@ func main() {
 	}
 
 	fmt.Println("==================================================")
-	fmt.Println("    BrainGuard v1.1 - Мониторинг и Защита         ")
+	fmt.Println("    LazyGuard v1.1 - Мониторинг и Защита         ")
 	fmt.Println("==================================================")
 	fmt.Printf("[*] Интерфейс: %s | Порт: %s\n", anti.interfaceName, anti.targetPort)
 	fmt.Printf("[*] Порог бана: > %d пак. за %v\n", anti.packetLimit, anti.checkInterval)
